@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PLAYVERSE — колекція інтерактивних мініігор.">
+<title>PLAYVERSE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root{
+    --bg:#171329;
+    --panel:#282247;
+    --panel2:#30294f;
+    --lav:#c6b5ff;
+    --lilac:#e2d9ff;
+    --gold:#f3c969;
+    --muted:#aaa3c4;
+    --white:#fbf9ff;
+    --line:rgba(226,217,255,.13);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--white);
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+    radial-gradient(ellipse at 12% 12%,rgba(126,92,210,.22),transparent 36%),
+    radial-gradient(ellipse at 88% 48%,rgba(88,67,154,.18),transparent 34%),
+    linear-gradient(145deg,#171329,#1b1732 55%,#151226);
+}
+a{text-decoration:none;color:inherit}
+.navbar{
+    background:rgba(23,19,41,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--line);
+    padding:15px 0;
+}
+.brand{
+    font:700 1.25rem "Space Grotesk",sans-serif;
+    letter-spacing:2px;
+    color:var(--white);
+}
+.brand-mark{
+    display:inline-grid;
+    place-items:center;
+    width:34px;
+    height:34px;
+    margin-right:9px;
+    border-radius:11px;
+    background:linear-gradient(135deg,#a98cff,#7056c8);
+    box-shadow:0 0 24px #9676e755;
+}
+.nav-link{
+    color:var(--muted);
+    font-weight:600;
+    margin-left:22px;
+    transition:.2s;
+}
+.nav-link:hover{color:var(--lilac)}
+.nav-cta{
+    border:1px solid #9c83e8;
+    border-radius:30px;
+    padding:9px 17px;
+    color:var(--lilac);
+    font-weight:700;
+    margin-left:22px;
+    transition:.25s;
+}
+.nav-cta:hover{background:#a98cff;color:#1b1530}
+.hero{
+    min-height:590px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    padding:105px 0 75px;
+}
+.hero-copy{position:relative;z-index:1;max-width:680px}
+.hero h1{
+    font:700 clamp(3rem,7vw,5.8rem)/.99 "Space Grotesk",sans-serif;
+    letter-spacing:-3px;
+    margin:24px 0;
+}
+.hero h1 span{
+    color:var(--lav);
+    text-shadow:0 0 35px #a98cff55;
+}
+.hero p{
+    color:var(--muted);
+    font-size:1.08rem;
+    line-height:1.8;
+    max-width:520px;
+}
+.hero-actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-top:32px;
+    flex-wrap:wrap;
+}
+.primary-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:11px;
+    background:linear-gradient(115deg,#c9b8ff,#9b7ee9);
+    color:#211936;
+    border:0;
+    border-radius:13px;
+    padding:14px 22px;
+    font-weight:800;
+    box-shadow:0 10px 30px #9878e633;
+    transition:.25s;
+}
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 35px #9878e655;
+    color:#211936;
+}
+.hero-art{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:360px;
+}
+.orbit{
+    width:min(360px,85vw);
+    aspect-ratio:1;
+    border:1px solid #c6b5ff2c;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    position:relative;
+    box-shadow:0 0 70px #8c6bdb18,inset 0 0 60px #8c6bdb10;
+}
+.orbit:before,.orbit:after{
+    content:"";
+    position:absolute;
+    border:1px solid #c6b5ff20;
+    border-radius:50%;
+}
+.orbit:before{inset:28px}
+.orbit:after{
+    inset:-25px;
+    border-style:dashed;
+    animation:spin 38s linear infinite;
+}
+.portal-core{
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:radial-gradient(circle at 35% 28%,#d8caff,#9476df 40%,#4b397e 76%);
+    box-shadow:0 0 35px #aa8affaa,0 0 100px #8865d766,inset -15px -18px 35px #312052;
+}
+.portal-core svg{width:95px;filter:drop-shadow(0 7px 12px #38245b88)}
+.float-icon{
+    position:absolute;
+    display:grid;
+    place-items:center;
+    width:58px;
+    height:58px;
+    border:1px solid #c6b5ff44;
+    border-radius:18px;
+    background:#2c254b;
+    box-shadow:0 10px 30px #09071477;
+    font-size:1.7rem;
+}
+.float-one{top:38px;left:42px}
+.float-two{right:18px;top:90px}
+.float-three{bottom:25px;left:50px}
+.float-four{bottom:65px;right:38px}
+.section{padding:65px 0 95px}
+.section-head{text-align:center;margin-bottom:42px}
+.section-kicker{
+    color:var(--gold);
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+.section-head h2{
+    font:700 clamp(2rem,4vw,3rem) "Space Grotesk",sans-serif;
+    margin:12px 0;
+}
+.section-head p{
+    color:var(--muted);
+    max-width:560px;
+    margin:0 auto;
+    line-height:1.7;
+}
+.game-card{
+    height:100%;
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:22px;
+    background:linear-gradient(145deg,rgba(48,41,79,.96),rgba(35,29,59,.98));
+    transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.game-card:hover{
+    transform:translateY(-8px);
+    border-color:#b49bff88;
+    box-shadow:0 22px 55px #08061166,0 0 30px #9b7ee91b;
+}
+.game-art{
+    height:220px;
+    position:relative;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    background:radial-gradient(circle at 50% 50%,#6952a8 0,#382d60 38%,#27203f 76%);
+}
+.game-art:before{
+    content:"";
+    position:absolute;
+    width:230px;
+    height:230px;
+    border:1px solid #d9ccff30;
+    border-radius:50%;
+    box-shadow:0 0 0 22px #d9ccff08,0 0 0 48px #d9ccff06;
+}
+.game-art svg{
+    position:relative;
+    z-index:1;
+    width:160px;
+    height:160px;
+    filter:drop-shadow(0 15px 18px #0b081c88);
+    transition:transform .35s;
+}
+.game-card:hover .game-art svg{transform:scale(1.08) rotate(-3deg)}
+.art-number{
+    position:absolute;
+    top:17px;
+    left:18px;
+    z-index:2;
+    color:#e6dcff;
+    font-size:.72rem;
+    letter-spacing:1.5px;
+    font-weight:700;
+}
+.card-body{
+    padding:24px 25px 26px;
+    display:flex;
+    flex-direction:column;
+    min-height:220px;
+}
+.card-tag{
+    color:var(--gold);
+    font-size:.7rem;
+    letter-spacing:1.5px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+.card-title{
+    font:700 1.35rem "Space Grotesk",sans-serif;
+    margin:9px 0 10px;
+}
+.card-text{
+    color:var(--muted);
+    font-size:.92rem;
+    line-height:1.65;
+    margin-bottom:22px;
+    flex-grow:1;
+}
+.play-link{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 15px;
+    border:1px solid #a98cff77;
+    border-radius:11px;
+    color:var(--lilac);
+    font-weight:700;
+    transition:.2s;
+}
+.play-link:hover{
+    background:var(--lav);
+    color:#211936;
+    border-color:var(--lav);
+}
+.play-link span:last-child{font-size:1.2rem;transition:transform .2s}
+.play-link:hover span:last-child{transform:translateX(4px)}
+.form-message{color:var(--gold);font-size:.8rem;margin-top:8px}
+footer{
+    border-top:1px solid var(--line);
+    padding:25px 0;
+    color:#8e87a8;
+    font-size:.82rem;
+}
+footer strong{color:var(--lilac);letter-spacing:1.5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:991px){
+    .hero{min-height:auto;padding:95px 0 55px}
+    .hero-art{min-height:330px;margin-top:25px}
+}
+@media(max-width:575px){
+    .navbar{padding:11px 0}
+    .nav-link{margin-left:0}
+    .nav-cta{margin-left:0;padding:7px 12px}
+    .hero{padding:78px 0 40px}
+    .hero h1{letter-spacing:-2px}
+    .hero-art{min-height:285px}
+    .orbit{width:255px}
+    .portal-core{width:145px;height:145px}
+    .portal-core svg{width:75px}
+    .float-icon{width:46px;height:46px;font-size:1.35rem;border-radius:14px}
+    .float-one{top:25px;left:8px}
+    .float-two{right:0;top:55px}
+    .float-three{bottom:12px;left:10px}
+    .float-four{bottom:38px;right:8px}
+    .section{padding:45px 0 65px}
+    .game-art{height:195px}
+    .card-body{min-height:205px;padding:21px}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*:before,*:after{
+        scroll-behavior:auto!important;
+        animation-duration:.01ms!important;
+        transition-duration:.01ms!important;
+    }
+}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top">
+<div class="container">
+<a class="brand d-flex align-items-center" href="#home">
+<span class="brand-mark">
+<svg viewBox="0 0 24 24" width="21" height="21" fill="none" aria-hidden="true">
+<path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" fill="#fff"/>
+<circle cx="12" cy="12" r="2.5" fill="#9476DF"/>
+</svg>
+</span>PLAYVERSE
+</a>
+<button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Відкрити меню">
+<span style="color:#e2d9ff;font-size:1.5rem">☰</span>
+</button>
+<div class="collapse navbar-collapse justify-content-end" id="mainNav">
+<div class="navbar-nav align-items-lg-center">
+<a class="nav-link" href="#home">Головна</a>
+<a class="nav-link" href="#games">Колекція ігор</a>
+<a class="nav-cta" href="#games">Обрати гру</a>
+</div>
+</div>
+</div>
+</nav>
+<header class="hero" id="home">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-7">
+<div class="hero-copy">
+<h1>Відкрий свій<br><span>PLAYVERSE</span></h1>
+<p>Чотири мініігри — чотири різні пригоди. Обирай настрій, випробовуй удачу та відкривай нові розваги в одному ігровому просторі.</p>
+<div class="hero-actions">
+<a class="primary-btn" href="#games">Дослідити ігри</a>
+</div>
+</div>
+</div>
+<div class="col-lg-5">
+<div class="hero-art" aria-hidden="true">
+<div class="orbit">
+<div class="portal-core">
+<svg viewBox="0 0 100 100" fill="none">
+<path d="M50 9L59 37L88 50L59 63L50 91L41 63L12 50L41 37L50 9Z" fill="#fff" fill-opacity=".9"/>
+<circle cx="50" cy="50" r="12" fill="#8E70D5"/>
+<path d="M50 23V77M23 50H77" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</svg>
+</div>
+<span class="float-icon float-one">🎱</span>
+<span class="float-icon float-two">🎲</span>
+<span class="float-icon float-three">🂡</span>
+<span class="float-icon float-four">🍒</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main>
+<section class="section" id="games">
+<div class="container">
+<div class="section-head">
+<div class="section-kicker">Обери свою пригоду</div>
+<h2>Колекція мініігор</h2>
+<p>Кожна гра має власний характер. Натискай «Грати» та переходь безпосередньо до потрібного застосунку.</p>
+</div>
+<div class="row g-4">
+<div class="col-md-6 col-xl-3">
+<article class="game-card">
+<div class="game-art">
+<span class="art-number">GAME 01 · ЛР 07</span>
+<svg viewBox="0 0 180 180" role="img" aria-label="Магічна куля">
+<defs>
+<radialGradient id="orb" cx="35%" cy="28%">
+<stop stop-color="#F5F0FF"/>
+<stop offset=".35" stop-color="#C8B5FF"/>
+<stop offset=".75" stop-color="#7054B7"/>
+<stop offset="1" stop-color="#35245F"/>
+</radialGradient>
+</defs>
+<ellipse cx="90" cy="153" rx="48" ry="10" fill="#100B22" opacity=".4"/>
+<path d="M55 125Q90 105 125 125L137 145Q90 166 43 145Z" fill="#A88CEB" stroke="#E7DFFF" stroke-width="2"/>
+<circle cx="90" cy="76" r="57" fill="url(#orb)" stroke="#E9DFFF" stroke-width="3"/>
+<path d="M54 46Q68 20 98 24" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+<path d="M90 42L101 66L126 76L101 86L90 110L79 86L54 76L79 66Z" fill="#fff" opacity=".85"/>
+<circle cx="90" cy="76" r="9" fill="#9A7CE1"/>
+</svg>
+</div>
+<div class="card-body">
+<div class="card-tag">Передбачення · ЛР №7</div>
+<h3 class="card-title">Magic Ball</h3>
+<p class="card-text">Постав запитання та дозволь магічній кулі підказати відповідь.</p>
+<a class="play-link game-link" href="https://khkmariia.github.io/Magic-Ball/" target="_blank" rel="noopener noreferrer"><span>Грати</span></a>
+<div class="form-message" aria-live="polite"></div>
+</div>
+</article>
+</div>
+<div class="col-md-6 col-xl-3">
+<article class="game-card">
+<div class="game-art">
+<span class="art-number">GAME 02 · ЛР 08</span>
+<svg viewBox="0 0 180 180" role="img" aria-label="Гральні кубики">
+<defs>
+<linearGradient id="dice1" x1="0" y1="0" x2="1" y2="1">
+<stop stop-color="#F4EFFF"/><stop offset="1" stop-color="#A88CEB"/>
+</linearGradient>
+<linearGradient id="dice2" x1="0" y1="0" x2="1" y2="1">
+<stop stop-color="#F7D987"/><stop offset="1" stop-color="#C18D39"/>
+</linearGradient>
+</defs>
+<g transform="rotate(-13 72 94)">
+<rect x="24" y="51" width="88" height="88" rx="17" fill="url(#dice1)" stroke="#fff" stroke-width="2"/>
+<g fill="#58418D">
+<circle cx="48" cy="75" r="7"/><circle cx="88" cy="75" r="7"/>
+<circle cx="68" cy="95" r="7"/><circle cx="48" cy="115" r="7"/><circle cx="88" cy="115" r="7"/>
+</g>
+</g>
+<g transform="rotate(13 119 70)">
+<rect x="91" y="34" width="66" height="66" rx="14" fill="url(#dice2)" stroke="#FFF0C5" stroke-width="2"/>
+<g fill="#704D20">
+<circle cx="111" cy="54" r="6"/><circle cx="137" cy="54" r="6"/>
+<circle cx="124" cy="67" r="6"/><circle cx="111" cy="81" r="6"/><circle cx="137" cy="81" r="6"/>
+</g>
+</g>
+<path d="M125 117L130 130L144 135L130 140L125 153L120 140L106 135L120 130Z" fill="#F9DB8C"/>
+</svg>
+</div>
+<div class="card-body">
+<div class="card-tag">Змагання · ЛР №8</div>
+<h3 class="card-title">The Higher Number Wins</h3>
+<p class="card-text">Змагайся з комп’ютером та перевір, кому цього разу усміхнеться удача.</p>
+<a class="play-link game-link" href="https://khkmariia.github.io/The-Higher-Number-Wins/" target="_blank" rel="noopener noreferrer"><span>Грати</span></a>
+<div class="form-message" aria-live="polite"></div>
+</div>
+</article>
+</div>
+<div class="col-md-6 col-xl-3">
+<article class="game-card">
+<div class="game-art">
+<span class="art-number">GAME 03 · ЛР 09</span>
+<svg viewBox="0 0 180 180" role="img" aria-label="Гральні карти">
+<g transform="rotate(-16 69 90)">
+<rect x="30" y="31" width="85" height="120" rx="10" fill="#E9E1FF" stroke="#fff" stroke-width="2"/>
+<text x="42" y="57" fill="#7455B7" font-size="21" font-weight="bold">A</text>
+<text x="72" y="111" fill="#8F70D1" font-size="54" text-anchor="middle">♠</text>
+</g>
+<g transform="rotate(13 115 87)">
+<rect x="76" y="25" width="78" height="120" rx="10" fill="#FBF8FF" stroke="#fff" stroke-width="2"/>
+<text x="87" y="51" fill="#C15B78" font-size="21" font-weight="bold">K</text>
+<text x="115" y="105" fill="#C15B78" font-size="51" text-anchor="middle">♥</text>
+</g>
+<path d="M145 20L150 31L162 36L150 41L145 53L140 41L128 36L140 31Z" fill="#F5D37C"/>
+</svg>
+</div>
+<div class="card-body">
+<div class="card-tag">Карткова гра · ЛР №9</div>
+<h3 class="card-title">Card Game 21</h3>
+<p class="card-text">Збери найкращу комбінацію карт та переможи дилера.</p>
+<a class="play-link game-link" href="https://khkmariia.github.io/Card-Game-21/" target="_blank" rel="noopener noreferrer"><span>Грати</span></a>
+<div class="form-message" aria-live="polite"></div>
+</div>
+</article>
+</div>
+<div class="col-md-6 col-xl-3">
+<article class="game-card">
+<div class="game-art">
+<span class="art-number">GAME 04 · ЛР 10</span>
+<svg viewBox="0 0 180 180" role="img" aria-label="Фруктовий ігровий автомат">
+<defs>
+<linearGradient id="slot" x1="0" y1="0" x2="0" y2="1">
+<stop stop-color="#F0D9FF"/><stop offset="1" stop-color="#9B79D9"/>
+</linearGradient>
+</defs>
+<rect x="26" y="28" width="128" height="127" rx="20" fill="#5B438D" stroke="#E5D7FF" stroke-width="3"/>
+<rect x="38" y="42" width="104" height="76" rx="11" fill="url(#slot)" stroke="#F5EFFF" stroke-width="3"/>
+<rect x="44" y="49" width="29" height="62" rx="6" fill="#FFF9EF"/>
+<rect x="75" y="49" width="29" height="62" rx="6" fill="#FFF9EF"/>
+<rect x="106" y="49" width="29" height="62" rx="6" fill="#FFF9EF"/>
+<text x="58" y="91" font-size="27" text-anchor="middle">🍒</text>
+<text x="90" y="91" font-size="27" text-anchor="middle">🍋</text>
+<text x="121" y="91" font-size="27" text-anchor="middle">🍇</text>
+<rect x="67" y="128" width="46" height="10" rx="5" fill="#EEDBFF"/>
+<circle cx="141" cy="129" r="8" fill="#F3C969" stroke="#FFF0C5" stroke-width="2"/>
+<path d="M90 12L96 24L109 29L96 34L90 47L84 34L71 29L84 24Z" fill="#F6D783"/>
+</svg>
+</div>
+<div class="card-body">
+<div class="card-tag">Ігровий автомат · ЛР №10</div>
+<h3 class="card-title">Fruit Casino</h3>
+<p class="card-text">Запускай барабани, лови однакові символи та випробовуй свою вдачу.</p>
+<a class="play-link game-link" href="https://khkmariia.github.io/Fruit-Casino/" target="_blank" rel="noopener noreferrer"><span>Грати</span></a>
+<div class="form-message" aria-live="polite"></div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="container d-flex flex-wrap justify-content-between gap-2">
+<span><strong>PLAYVERSE</strong> · Колекція мініігор</span>
+<span>© 2026 Марія Хорошева · Усі права захищено</span>
+</div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$(function(){
+    $('a[href^="#"]').on('click',function(event){
+        const target=$(this).attr('href');
+        if(target.length>1&&$(target).length){
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop:$(target).offset().top-75
+            },550);
+            $('.navbar-collapse').collapse('hide');
+        }
+    });
+    $('.game-link').on('click',function(event){
+        const address=$(this).attr('href');
+        const message=$(this).closest('.card-body').find('.form-message');
+        if(!address||!/^https:\/\/khkmariia\.github\.io\/[A-Za-z0-9-]+\/?$/.test(address)){
+            event.preventDefault();
+            message.text('Посилання на гру некоректне. Спробуй пізніше.');
+            return;
+        }
+        message.text('');
+    });
+    if($('.game-card').length!==4){
+        console.warn('Перевірте кількість ігор у колекції.');
+    }
+});
+</script>
+</body>
+</html>
